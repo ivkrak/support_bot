@@ -1,3 +1,4 @@
+import asyncio
 import os
 
 from aiogram import F, Router
@@ -42,8 +43,8 @@ async def forward_question(message: Message, state: FSMContext):
 async def answer_to_message(qq: CallbackQuery, state: FSMContext):
     r = get_info_about_ticket(session=db_conn.get_session(), message_from_support_id=qq.message.message_id)
 
-    await qq.message.answer('Напишите ответ')
-    await state.update_data(user_id=r.user_id, message_to_delete=qq.message.message_id)
+    res = await qq.message.answer('Напишите ответ')
+    await state.update_data(user_id=r.user_id, message_to_delete1=qq.message.message_id, message_to_delete2=res.message_id)
     await state.set_state(SupportState.answer)
 
 @router.message(SupportState.answer)
@@ -51,9 +52,13 @@ async def forward_answer(message: Message, state: FSMContext):
     forward_to_chat_id = (await(state.get_data()))['user_id']
     await bot.send_message(chat_id=forward_to_chat_id, text='Сообщение от поддержки:')
     await message.copy_to(chat_id=forward_to_chat_id)
-    await bot.delete_message(chat_id=message.chat.id, message_id=(await(state.get_data()))['message_to_delete'])
-    await message.answer('Сообщение отправлено')
+    await bot.delete_message(chat_id=message.chat.id, message_id=(await(state.get_data()))['message_to_delete1'])
+    await bot.delete_message(chat_id=message.chat.id, message_id=(await(state.get_data()))['message_to_delete2'])
+    await bot.delete_message(chat_id=message.chat.id, message_id=message.message_id)
     await state.clear()
+    r = await message.answer('Сообщение отправлено')
+    await asyncio.sleep(5)
+    await bot.delete_message(chat_id=message.chat.id, message_id=r.message_id)
 
 @router.callback_query(F.data == 'block')
 async def block_user(qq: CallbackQuery):

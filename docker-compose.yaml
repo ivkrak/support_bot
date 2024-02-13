@@ -5,3 +5,5 @@ services:
     env_file: .env
     build: .
     restart: always
+    volumes:
+      - ./db_data:/app/src/databse/db_data/
