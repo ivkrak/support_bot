@@ -1,4 +1,4 @@
-from sqlalchemy import select, update
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from src.database.models import BlockList, SupportRequest
@@ -40,7 +40,3 @@ def get_info_about_ticket(session: Session, message_from_support_id: int):
         )
     ).scalar_one_or_none()
     return ticket
-
-
-
-

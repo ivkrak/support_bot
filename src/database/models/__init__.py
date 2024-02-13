@@ -1,2 +1,2 @@
-from .blocklist import BlockList
-from .support import SupportRequest
+from .blocklist import BlockList #noqa
+from .support import SupportRequest #noqa
