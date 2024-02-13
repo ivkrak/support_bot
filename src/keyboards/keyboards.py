@@ -23,5 +23,6 @@ go_to_menu_kb = ReplyKeyboardMarkup(
 answer_kb = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text='Ответить', callback_data='answer')],
+        [InlineKeyboardButton(text='Заблокировать пользователя', callback_data='block')],
     ]
 )

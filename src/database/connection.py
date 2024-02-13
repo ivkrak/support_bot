@@ -45,5 +45,5 @@ class DataBaseConnection(object):
 
 db_conn = DataBaseConnection(
     url='sqlite:///src/database/db.sqlite3',
-    echo=True,
+    echo=False,
 )

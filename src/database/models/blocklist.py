@@ -7,3 +7,4 @@ class BlockList(Base):
     __tablename__ = 'blocklist'
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     user_id: Mapped[int]
+
