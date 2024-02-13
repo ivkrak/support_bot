@@ -11,4 +11,3 @@ logger.add(
 )
 
 bot = Bot(token=os.getenv('BOT_TOKEN'))
-# bot = Bot(token='6888496688:AAHb9JXuV7F-Ryq2Im5Kfmrc0GbnflU4tNk')
